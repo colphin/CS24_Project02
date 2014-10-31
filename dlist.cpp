@@ -290,7 +290,6 @@ bool DList::contains(string obj) const {        //BROKEN
         if(n->info == obj){
             return true;
         }
-
         n = n->next;
     }
     return false;
