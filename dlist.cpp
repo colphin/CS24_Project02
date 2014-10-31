@@ -250,6 +250,7 @@ void DList::removeAllEqual(string obj) {
 }
 
 void DList::reverse() {     //BROKEN- don't have a clue as to why
+    /*
     DLNode *p1, *p2;
     p1 = first;
     p2 = p1->next;
@@ -261,6 +262,26 @@ void DList::reverse() {     //BROKEN- don't have a clue as to why
         p1 = p2;
         p2 = p2->next;
     }
+    */
+
+    if(first == NULL){
+        std::cout << "empty list" << std::endl;
+    }else if (first->next == NULL){
+        return;
+    }else{
+        DLNode *ptr = first;
+        while (ptr != NULL) {
+            DLNode *tmp = ptr->next;
+            ptr->next = ptr->prev;
+            ptr->prev = tmp;
+            if (tmp == NULL) {
+                last = first;
+                first = ptr;
+            }
+            ptr = tmp;
+        }
+    }
+
 }
 
 bool DList::contains(string obj) const {        //BROKEN
