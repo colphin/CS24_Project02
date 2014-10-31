@@ -178,7 +178,7 @@ string DList::remove (int index) {      //BROKEN - won't actually delete
     {
         q->prev->next = 0;
         string temp = q->info;
-        free(q);
+        delete q;
         return temp;
     }
     else
@@ -186,7 +186,7 @@ string DList::remove (int index) {      //BROKEN - won't actually delete
         string temp = q->info;
         q->prev = q->next;
         q->next->prev = q->prev;
-        free(q);
+        delete q;
         return temp;
     }
 }
