@@ -25,10 +25,7 @@ int DList::getSize() const {
 }
 
 bool DList::isEmpty() const {
-    if (first == 0)
-        return true;
-    else
-        return false;
+    return first == 0;
 }
 
 string DList::get(int index) const {        //WORKS
@@ -62,7 +59,6 @@ string DList::getLast() const {     // WORKS
 }
 
 DList DList::head(int length) const {       // BROKEN
-    
     DList sublist;
     /*
     DLNode *q = sublist.first;
@@ -271,6 +267,7 @@ bool DList::contains(string obj) const {        //BROKEN
     DLNode *n = first;
     while(n){
         if(n->info == obj){
+            n = n-> next;
             return true;
         }
     }
