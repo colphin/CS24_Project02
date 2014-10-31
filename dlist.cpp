@@ -249,7 +249,7 @@ void DList::removeAllEqual(string obj) {
     }
 }
 
-void DList::reverse() {     //BROKEN- don't have a clue as to why
+void DList::reverse() {     //WORKS- don't have a clue as to why
     /*
     DLNode *p1, *p2;
     p1 = first;
@@ -288,9 +288,9 @@ bool DList::contains(string obj) const {        //BROKEN
     DLNode *n = first;
     while(n){
         if(n->info == obj){
-            n = n-> next;
             return true;
         }
+        n = n->next;
     }
     return false;
 }
