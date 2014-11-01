@@ -1,0 +1,9 @@
+addLast a
+addLast b
+addLast c
+addLast d
+addLast e
+
+print
+remove 3
+print
