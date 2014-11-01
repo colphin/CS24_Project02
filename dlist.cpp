@@ -157,68 +157,40 @@ void DList::addLast(string obj){            // WORKS
     }
 }
 
-string DList::remove (int index) {      //BROKEN - won't actually delete
-    if (first == NULL){
-        return "Empty List";
-    }
+string DList::remove (int index) {
     DLNode *q = first;
-    for (int i = 0; i < index-1; i++) {
-        q=q->next;
-        if (q == NULL) {
-            return "OUT OF BOUNDS EXCEPTION";
+
+    if(first == NULL){
+        return "EMPTY SET";
+    }
+
+    for(int i = 0; i <index-1; i++){
+        q = q-> next;
+        if (q == NULL){
+            return "OUT OF BOUNDS";
         }
     }
-    string temp =  q->info;
 
-    /* If node to be deleted is head node */
-    if(index == 1)
-        first = first->next;
+    string temp = q->info;
+    if (index == 1){        //START
+        first = first -> next;
+        delete q;
+    }
 
-    /* Change next only if node to be deleted is NOT the last node */
-    if(q->next != last)
-        q->next->prev = q->prev;
+    else if (q->next == NULL){       //END
+        DLNode *temp = q;
+        q->prev->next = NULL;
+        delete temp;
+    }
+    else{                   //MIDDLE
+        DLNode *temp = q;
+        q->prev->next = temp -> next;
+        q -> next-> prev = temp-> prev;
+        delete temp;
+        //delete q;
+    }
 
-    /* Change prev only if node to be deleted is NOT the first node */
-    if(q->prev != first)
-        q->prev->next = q->next;
-
-    /* Finally, free the memory occupied by del*/
-    free(q);
     return temp;
-
-    /*
-    if (first == NULL){
-        std::cout<<"Empty List."<<std::endl;
-        return "";
-    }
-    DLNode *q;
-    q = first;
-    for (int i = 0;i < index - 1;i++)
-    {
-        q = q->next;
-        if (q == NULL)
-        {
-            std::cout<<"There are less than ";
-            std::cout<<index<<" elements."<<std::endl;
-            return "";
-        }
-    }
-    if (q->next == NULL)
-    {
-        q->prev->next = 0;
-        string temp = q->info;
-        delete q;
-        return temp;
-    }
-    else
-    {
-        string temp = q->info;
-        q->prev = q->next;
-        q->next->prev = q->prev;
-        delete q;
-        return temp;
-    }
-    */
 }
 
 string DList::removeFirst () {      //WORKS
