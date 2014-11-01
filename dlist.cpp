@@ -159,6 +159,35 @@ void DList::addLast(string obj){            // WORKS
 
 string DList::remove (int index) {      //BROKEN - won't actually delete
     if (first == NULL){
+        return "Empty List";
+    }
+    DLNode *q = first;
+    for (int i = 0; i < index-1; i++) {
+        q=q->next;
+        if (q == NULL) {
+            return "OUT OF BOUNDS EXCEPTION";
+        }
+    }
+    string temp =  q->info;
+
+    /* If node to be deleted is head node */
+    if(index == 1)
+        first = first->next;
+
+    /* Change next only if node to be deleted is NOT the last node */
+    if(q->next != last)
+        q->next->prev = q->prev;
+
+    /* Change prev only if node to be deleted is NOT the first node */
+    if(q->prev != first)
+        q->prev->next = q->next;
+
+    /* Finally, free the memory occupied by del*/
+    free(q);
+    return temp;
+
+    /*
+    if (first == NULL){
         std::cout<<"Empty List."<<std::endl;
         return "";
     }
@@ -189,6 +218,7 @@ string DList::remove (int index) {      //BROKEN - won't actually delete
         delete q;
         return temp;
     }
+    */
 }
 
 string DList::removeFirst () {      //WORKS
