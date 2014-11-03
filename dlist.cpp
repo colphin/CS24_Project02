@@ -30,7 +30,7 @@ bool DList::isEmpty() const {
 
 string DList::get(int index) const {        //WORKS
     if (isEmpty()){        //EMPTY LIST EXCEPTION
-        return "EMPTY LIST MOTHAFUCKA";
+        throw EmptyList();
     }
     
     DLNode *q;
@@ -40,9 +40,7 @@ string DList::get(int index) const {        //WORKS
         q = q->next;
         if (q == NULL)
         {
-            std::cout<<"There are less than ";
-            std::cout<<index<<" elements."<<std::endl;
-            return"";
+            throw BadIndex();
         }
     }
     
@@ -50,10 +48,16 @@ string DList::get(int index) const {        //WORKS
 }
 
 string DList::getFirst() const {    // WORKS
+    if (isEmpty()){        //EMPTY LIST EXCEPTION
+        throw EmptyList();
+    }
     return first->info;
 }
 
 string DList::getLast() const {     // WORKS 
+    if (isEmpty()){        //EMPTY LIST EXCEPTION
+        throw EmptyList();
+    }
     return last->info;
 }
 
@@ -104,7 +108,7 @@ DList DList::tail(int length) const {       //WORKS
 
 void DList::insert(int index,  string obj) {        // WORKS
     if (isEmpty()){        //EMPTY LIST EXCEPTION
-        return;
+        throw EmptyList();
     }
     DLNode *tmp, *q;
     q = first;
@@ -112,9 +116,7 @@ void DList::insert(int index,  string obj) {        // WORKS
         q = q->next;
         if (q == NULL)
         {
-            std::cout<<"There are less than ";
-            std::cout<<index<<" elements."<<std::endl;
-            return;
+            throw BadIndex();
         }
     }
     tmp = new DLNode(obj);      // to add at last item
@@ -167,13 +169,13 @@ string DList::remove (int index) {      //Works...I think
     DLNode *q = first;
 
     if (isEmpty()){        //EMPTY LIST EXCEPTION
-        return "EMPTY LIST MOTHAFUCKA";
+        throw EmptyList();
     }
 
     for(int i = 0; i <index-1; i++){
         q = q-> next;
         if (q == NULL){
-            return "OUT OF BOUNDS";
+            throw BadIndex();
         }
     }
 
@@ -201,7 +203,7 @@ string DList::remove (int index) {      //Works...I think
 
 string DList::removeFirst () {      //WORKS
     if (isEmpty()){        //EMPTY LIST EXCEPTION
-        return "EMPTY LIST MOTHAFUCKA";
+        throw EmptyList();
     }
     
     DLNode *q = first;
@@ -214,7 +216,7 @@ string DList::removeFirst () {      //WORKS
 
 string DList::removeLast() {        //WORKS
     if (isEmpty()){        //EMPTY LIST EXCEPTION
-        return "EMPTY LIST MOTHAFUCKA";
+        throw EmptyList();
     }
     
     DLNode *q = last;
@@ -265,9 +267,7 @@ void DList::removeAllEqual(string obj) {        //WORKS
 
 void DList::reverse() {     //WORKS
 
-    if (isEmpty()){        //EMPTY LIST EXCEPTION
-        return;
-    }else if (first->next == NULL){
+    if (first->next == NULL){
         return;
     }else{
         DLNode *ptr = first;
