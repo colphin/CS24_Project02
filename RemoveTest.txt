@@ -3,7 +3,16 @@ addLast b
 addLast c
 addLast d
 addLast e
+addLast f
+addLast g
+addLast a
+addLast b
+addLast c
+addLast d
+addLast e
+addLast f
+addLast g
 
 print
-remove 3
+tail 6
 print

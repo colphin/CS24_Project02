@@ -29,9 +29,8 @@ bool DList::isEmpty() const {
 }
 
 string DList::get(int index) const {        //WORKS
-    if (first == 0){        //EMPTY LIST EXCEPTION
-        std::cout << "FIRST MAKE A LIST"<<std::endl;
-        return "";
+    if (isEmpty()){        //EMPTY LIST EXCEPTION
+        return "EMPTY LIST MOTHAFUCKA";
     }
     
     DLNode *q;
@@ -58,46 +57,53 @@ string DList::getLast() const {     // WORKS
     return last->info;
 }
 
-DList DList::head(int length) const {       // BROKEN
+DList DList::head(int length) const {       // Works
     DList sublist;
-    /*
-    DLNode *q = sublist.first;
-    DLNode *n = first;
-    for (int i = 0; i < length-1;i++){
-        q = n->next;
-        q = q->next;
-        n = n->next;
-    }
-    return sublist;
-    */
-    
-    DLNode *q = first;
+    DLNode *main_n = first;
+    if (length == 0)
+        return sublist;
+
+    sublist.first = new DLNode(first->info);
     DLNode *n = sublist.first;
-    
-    n = new DLNode(q->info);
-    for (int i = 0; i < length-1; i++) {
-        DLNode *temp = new DLNode(q->next->info);
-        n = temp;
+    for (int i = 0; i < length-1;i++){
+        n->next = new DLNode(main_n->next->info);
         n = n->next;
+        main_n = main_n -> next;
     }
+
+
     return sublist;
 }
 
-DList DList::tail(int length) const {       //BROKEN
+DList DList::tail(int length) const {       //WORKS
     DList sublist;
-    DLNode *q = sublist.last;
-    DLNode *n = last;
+    DLNode *main_n = last;
+    if (length == 0)
+        return sublist;
+
+    sublist.last = new DLNode(last->info);
+    DLNode *n = sublist.last;
     for (int i = 0; i < length-1;i++){
-        q->prev = n->prev;
-        q = q->prev;
+        n->prev = new DLNode(main_n->prev->info);
+        DLNode *temp = n;
         n = n->prev;
+        n->next = temp;
+
+        //std::cout<<n->info<<std::endl;
+        //std::cout<<temp->info<<std::endl;
+
+        //delete temp;
+        main_n = main_n -> prev;
     }
+    sublist.first = n;
+    //std::cout <<"reverse: ";
+    //sublist.print();
+
     return sublist;
 }
 
 void DList::insert(int index,  string obj) {        // WORKS
-    if (first == NULL){
-        std::cout<<"First Create the list."<<std::endl;
+    if (isEmpty()){        //EMPTY LIST EXCEPTION
         return;
     }
     DLNode *tmp, *q;
@@ -117,7 +123,7 @@ void DList::insert(int index,  string obj) {        // WORKS
         tmp->next = NULL;
         tmp->prev = q;
         last = tmp;
-    }else if(index == 0){
+    }else if(index == 0){       // to add to start
         tmp->next = first;
         tmp->prev = NULL;
         first = tmp;
@@ -157,11 +163,11 @@ void DList::addLast(string obj){            // WORKS
     }
 }
 
-string DList::remove (int index) {
+string DList::remove (int index) {      //Works...I think
     DLNode *q = first;
 
-    if(first == NULL){
-        return "EMPTY SET";
+    if (isEmpty()){        //EMPTY LIST EXCEPTION
+        return "EMPTY LIST MOTHAFUCKA";
     }
 
     for(int i = 0; i <index-1; i++){
@@ -194,9 +200,8 @@ string DList::remove (int index) {
 }
 
 string DList::removeFirst () {      //WORKS
-    if (first == 0){
-        std::cout<<"Empty Set"<<std::endl;
-        return "";
+    if (isEmpty()){        //EMPTY LIST EXCEPTION
+        return "EMPTY LIST MOTHAFUCKA";
     }
     
     DLNode *q = first;
@@ -208,9 +213,8 @@ string DList::removeFirst () {      //WORKS
 }
 
 string DList::removeLast() {        //WORKS
-    if (first == 0){
-        std::cout<<"Empty Set"<<std::endl;
-        return "";
+    if (isEmpty()){        //EMPTY LIST EXCEPTION
+        return "EMPTY LIST MOTHAFUCKA";
     }
     
     DLNode *q = last;
@@ -222,52 +226,47 @@ string DList::removeLast() {        //WORKS
     return temp;
 }
 
-void DList::removeAllEqual(string obj) {
-    DLNode *temp, *q;
-    if (first->info == obj){
-        temp = first;
-        first = first->next;
-        first -> prev = 0;
-        delete temp;
-    }
-    q = first;
-    while (q->next->next != 0) {
-        if (q->next->info == obj){
-            temp = q->next;
-            q->next = temp->next;
-            temp->next->prev = 0;
-            delete temp;
+void DList::removeAllEqual(string obj) {        //WORKS
+    DLNode *q = first;
+    while (q) {
+        if (q==first && q->info == obj){        //START
+            //std::cout<< "\n BEG:";
+            //print();
+            DLNode *head_temp = q;
+            first = first -> next;
+            delete head_temp;
+            q = first;
+            //std::cout<< "\n-BEG:";
+            //print();
         }
-        q=q->next;
-    }
-    
-    if (q->next->info == obj) {
-        temp = q -> next;
-        delete temp;
-        q->next = 0;
-    }
-    else{
-        std::cout<<"Element not found"<<std::endl;
+        else if (q->next == NULL && q->info == obj){       //END
+            //std::cout<< "\n END:";
+            //print();
+            removeLast();
+            //std::cout<< "\n-END:";
+            //print();
+            return;
+        }
+        else if ( q->info == obj){                   //MIDDLE
+            //std::cout<< "\n MID:";
+            //print();
+            DLNode *temp = q;
+            q->prev->next = temp -> next;
+            q -> next-> prev = temp-> prev;
+            delete temp;
+            q = first;
+            //std::cout<< "\n-MID:";
+            //print();
+        }else{
+            q = q->next;
+        }
     }
 }
 
-void DList::reverse() {     //WORKS- don't have a clue as to why
-    /*
-    DLNode *p1, *p2;
-    p1 = first;
-    p2 = p1->next;
-    p1 -> next = 0;
-    p1 -> prev = p2;
-    while(p2!=0){
-        p2 -> prev = p2 -> next;
-        p2->next = p1;
-        p1 = p2;
-        p2 = p2->next;
-    }
-    */
+void DList::reverse() {     //WORKS
 
-    if(first == NULL){
-        std::cout << "empty list" << std::endl;
+    if (isEmpty()){        //EMPTY LIST EXCEPTION
+        return;
     }else if (first->next == NULL){
         return;
     }else{
@@ -286,7 +285,7 @@ void DList::reverse() {     //WORKS- don't have a clue as to why
 
 }
 
-bool DList::contains(string obj) const {        //BROKEN
+bool DList::contains(string obj) const {        //WORKS
     DLNode *n = first;
     while(n){
         if(n->info == obj){
