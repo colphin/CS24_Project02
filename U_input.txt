@@ -1,0 +1,36 @@
+addLast apple
+addLast cat
+addLast bite
+print
+
+# (Blank lines are ignored too.)
+
+# Try some other normal operations (you should try ALL,
+# including boundary cases for all functions).
+addFirst pow
+print
+tail 2
+reverse
+print
+removeFirst
+print
+insert 2 mouse
+print
+contains apple
+contains bite
+
+# Remember to test invalid ops for proper exception throwing.
+insert 9 wrong
+get -1
+
+# Try clear, and some empty list ops.
+clear
+print
+size
+contains apple
+head 4
+clear
+
+# Try some invalid things for empty list.
+first
+removeLast

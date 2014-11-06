@@ -32,6 +32,9 @@ string DList::get(int index) const {        //WORKS
     if (isEmpty()){        //EMPTY LIST EXCEPTION
         throw EmptyList();
     }
+    if (index<0){
+        throw BadIndex();
+    }
     
     DLNode *q;
     q = first;
@@ -64,7 +67,7 @@ string DList::getLast() const {     // WORKS
 DList DList::head(int length) const {       // Works
     DList sublist;
     DLNode *main_n = first;
-    if (length == 0)
+    if (length == 0 || isEmpty())
         return sublist;
 
     sublist.first = new DLNode(first->info);
@@ -82,7 +85,7 @@ DList DList::head(int length) const {       // Works
 DList DList::tail(int length) const {       //WORKS
     DList sublist;
     DLNode *main_n = last;
-    if (length == 0)
+    if (length == 0 || isEmpty())
         return sublist;
 
     sublist.last = new DLNode(last->info);
@@ -136,7 +139,6 @@ void DList::insert(int index,  string obj) {        // WORKS
         q->next = tmp;
         tmp->prev = q;
     }
-    std::cout<<"Element Inserted"<<std::endl;
 }
 
 void DList::addFirst(string obj) {          // WORKS
@@ -148,6 +150,10 @@ void DList::addFirst(string obj) {          // WORKS
     
     if (first->next == 0){
         last = temp;
+    }
+
+    if (first ->next != 0){
+        first -> next -> prev = first;
     }
 }
 

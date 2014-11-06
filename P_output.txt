@@ -1,0 +1,25 @@
+add apple last: okay
+add cat last: okay
+add bite last: okay
+List contents: apple, cat, bite
+add pow first: okay
+List contents: pow, apple, cat, bite
+last 2 elements: cat, bite
+reversing list: okay
+List contents: bite, cat, apple, pow
+remove first: bite
+List contents: cat, apple, pow
+insert mouse at position 2: okay
+List contents: cat, apple, mouse, pow
+contains apple: yes
+contains bite: no
+insert wrong at position 9: bad index exception
+get from index -1: bad index exception
+clear list: okay
+List contents: 
+size: 0
+contains apple: no
+first 4 elements: 
+clear list: okay
+first: empty list exception
+remove last: empty list exception
