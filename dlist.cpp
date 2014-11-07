@@ -273,15 +273,18 @@ void DList::removeAllEqual(string obj) {        //WORKS
 
 void DList::reverse() {     //WORKS
 
-    if (first->next == NULL){
+    if (isEmpty()) {
+        return;
+    }
+    if (first->next == 0 || first == 0){
         return;
     }else{
         DLNode *ptr = first;
-        while (ptr != NULL) {
+        while (ptr != 0) {
             DLNode *tmp = ptr->next;
             ptr->next = ptr->prev;
             ptr->prev = tmp;
-            if (tmp == NULL) {
+            if (tmp == 0) {
                 last = first;
                 first = ptr;
             }
@@ -302,7 +305,6 @@ bool DList::contains(string obj) const {        //WORKS
     return false;
 }
 
-//rprint doesn't work.
 
 // DO NOT CHANGE ANYTHING BELOW THIS COMMENT.
 // print and rprint are already done.
